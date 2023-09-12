@@ -4,7 +4,7 @@ list1=[0,1,0,0,0,0,0]
 start=time.time()
 total = 0
 min = 0 
-max = 12
+max = 64
 rows = []
 column = []
 for i in range(min,max):
