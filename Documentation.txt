@@ -1,0 +1,49 @@
+Introduction
+
+Modules 
+
+Canvas.py 
+
+title_canvas_build 
+    Args (tkinter_container)
+    Purpose:
+        creates the canvas in which the main background is build 
+        this is used instead of a label to ensure that text and other
+        widgets do not have white background on top of  the image.
+    Jumps:
+        build_layout(root)
+
+build_layout
+    Args(tkinter_container)
+    Purpose: 
+        creates the play,settings, and exit buttons
+    Jumps:
+        Exit button: 
+            run_quit(root)
+        Start button:
+            start_click(start_button,exit_button,settings_button,root)
+    
+run_quit
+    Args(tkinter_container)
+    Purpose:
+        Exit program 
+    
+start_click
+    Args(start button, exit button, settings button, tkinter_container)
+    Purpose:
+        Clears button off screen
+        needed to load the mine sweeper sweeper_screen
+        Canvas was not removed because the same background is being used
+        and the width and height of the screen is not changing.
+    Jumps:
+        build_miner(root)
+
+build_miner(tkinter_container)
+    Args(tkinter_container)
+    Purpose:
+        draw in the mine sweeper game
+    Dependencies:
+        sweeper_screen.py
+    
+Sweeper_screen.py
+
