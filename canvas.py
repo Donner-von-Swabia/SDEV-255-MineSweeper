@@ -15,7 +15,7 @@ def title_canvas_build(root):
 
 def build_miner(root):
     min = 0
-    max = 30
+    max = 15
     rows = []
     global buttonsx
 
