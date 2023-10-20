@@ -14,6 +14,7 @@ def build_button(min,max,rows,root):
         buttonsx.append(buttonsy)
         buttonsy = []
     frame.place(relx=0.5,rely=0.5, anchor=CENTER)
+    #Place buttons for reset and quit here
     return buttonsx
 
 def button_press(data,buttonsx):
