@@ -18,6 +18,7 @@ def build_miner(root):
     max = 15
     rows = []
     global buttonsx
+    
 
     rows = sweeper_screen.build_mines(min,max,rows)
     rows = sweeper_screen.build_number(min,max,rows)
