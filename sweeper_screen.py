@@ -77,14 +77,32 @@ def button_press(data,buttonsx):
         (buttonsx[ data[0]])[data[1]].config(foreground="black", background="black")
 
 def mine_logic(value,data, buttonsx):
+    global score
+    global cscore
+    global etime
+    global ctime
     match value:
         case 9:
             #((buttonsx[ data[0]])[data[1]]).config(foreground="red", background="red")
             end_game(buttonsx)
         case 0:
             ((buttonsx[ data[0]])[data[1]]).config(foreground="blue", background="blue")
+            
+            cscore = cscore + 100
+            ctime = ctime + 1
+            score.config(text="Score:  " + str(cscore))
+            etime.config(text="Time:   " + str(ctime))
+            score.place()
+            etime.place()
+
         case _:
            ((buttonsx[ data[0]])[data[1]]).config(foreground="yellow", background="yellow")
+           cscore = cscore + 100
+           ctime = ctime + 1
+           score.config(text="Score:  " + str(cscore))
+           etime.config(text="Time:   " + str(ctime))
+           score.place()
+           etime.place()
 
 
 def end_game(buttonsx):
