@@ -6,9 +6,12 @@ import time
 
 
 def build_button(min,max,rows,root):
+    #Main function to build tiles
     buttonsx = []
     buttonsy = []
     frame = Frame(root)
+
+    #For loops creates all the tiles as buttons with command linking to button_press
     for x in range(min,max):
         for y in range(min,max):
             temp = ("Button" + str(x) + str(y))
@@ -19,6 +22,7 @@ def build_button(min,max,rows,root):
         buttonsx.append(buttonsy)
         buttonsy = []
     frame.place(relx=0.5,rely=0.5, anchor=CENTER)
+    #Declaring globals for time, score, and flag
     global reset_button
     global back_button
     global score
@@ -32,6 +36,9 @@ def build_button(min,max,rows,root):
     flag = False
     cscore = 0
     ctime = 000
+
+
+    # Adds all other buttons to the main game page
     reset_button = Button(root,text="Reset Game",padx=5,pady=5,command=lambda data =[frame,root]: game_reset(data))
     reset_button.place(relx=0.5,rely=0.75, anchor=CENTER)
     reset_button.config(state=DISABLED)
@@ -46,12 +53,15 @@ def build_button(min,max,rows,root):
     return buttonsx
 
 def setchange():
+    #Allows the user to activate flag mode
     global flag
     if (flag):
         flag = False
     else:
         flag = True
+
 def back_click(data):
+    #Basically destroys everything from main game page and calls the tile building function
     frame = data[0]
     root = data[1]
     frame.destroy()
@@ -63,29 +73,38 @@ def back_click(data):
     canvas.build_layout(root)
 
 def game_reset(data):
+    #Called when game is over, allows player to play again
     frame = data[0]
     root = data[1]
     frame.destroy()
+    #Destroys the tile frame then rebuilds it with a new set of mines
     canvas.build_miner(root)
 
 def button_press(data,buttonsx):
+    #Called when tile is pressed
+    # Checks if flag mode is active
     if (flag  == False):
+        #Disables tile then checks what number is associated with it
         (buttonsx[ data[0]])[data[1]].config(state=DISABLED)
         print((buttonsx[ data[0]])[data[1]].cget('text'))
         mine_logic(((buttonsx[ data[0]])[data[1]].cget('text')),data,buttonsx)
     else:
+        #Blacks out the tile / flagging
         (buttonsx[ data[0]])[data[1]].config(foreground="black", background="black")
 
 def mine_logic(value,data, buttonsx):
+    #Function called from button press to check what the value the tile is and update score and time
     global score
     global cscore
     global etime
     global ctime
     match value:
         case 9:
+            #The user has struck a mine, the game is over.
             #((buttonsx[ data[0]])[data[1]]).config(foreground="red", background="red")
             end_game(buttonsx)
         case 0:
+            #If tile number is 0
             ((buttonsx[ data[0]])[data[1]]).config(foreground="blue", background="blue")
             
             cscore = cscore + 100
@@ -96,6 +115,7 @@ def mine_logic(value,data, buttonsx):
             etime.place()
 
         case _:
+           #If tile number is any warning number
            ((buttonsx[ data[0]])[data[1]]).config(foreground="yellow", background="yellow")
            cscore = cscore + 100
            ctime = ctime + 1
@@ -106,8 +126,10 @@ def mine_logic(value,data, buttonsx):
 
 
 def end_game(buttonsx):
+    #Called when player clicks tile number with a 9
     min = 0
     max = len(buttonsx)
+    #Disables all tiles and changes color to blue
     for x in range(min,max):
         for y in range(min,max):
             buttonsx[x][y].config(background="Blue",activeforeground="Red")
@@ -120,6 +142,7 @@ def warning():
     return
 
 def build_mines(min,max,rows):
+    #Function creates 2D array and fills  in where mines are
     list1=[0,1,0,0,0,0,0,0]
     column = []
     for i in range(min,max):
@@ -134,6 +157,11 @@ def build_mines(min,max,rows):
     return rows
 
 def build_number(min,max,rows):
+    #Looks very confusing but basically adds all warning numbers so all adjacent tiles around a mine have numbers
+    #Basically goes through 2D array, checks if value is a 0 or 9
+        # If the location in the 2D  array has a 9 then the script will add a 1 to all adjacent tiles
+        #However it checks before adding a 1 if the adjacent tile is a 9 then it will not add a 1 as it is mine
+        
     for i in range(min,max):
         for j in range(min,max):
             if (rows[i])[j] == 9:
